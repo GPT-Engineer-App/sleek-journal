@@ -1,8 +1,10 @@
-import { Box, Container, Heading, Text, VStack, HStack, Link, Divider, Button } from "@chakra-ui/react";
+import { Box, Container, Heading, Text, VStack, HStack, Link, Divider, Button, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 const Index = () => {
+  const bg = useColorModeValue("gray.100", "gray.900");
+  const color = useColorModeValue("black", "white");
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -11,7 +13,7 @@ const Index = () => {
   }, []);
 
   return (
-    <Container maxW="container.lg" p={4}>
+    <Container maxW="container.lg" p={4} bg={bg} color={color}>
       {/* Header */}
       <Box as="header" mb={8}>
         <Heading as="h1" size="2xl" textAlign="center" mb={4}>
