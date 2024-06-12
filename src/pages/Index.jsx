@@ -1,6 +1,7 @@
 import { Box, Container, Heading, Text, VStack, HStack, Link, Divider, Button, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
 
 const Index = () => {
   const bg = useColorModeValue("gray.100", "gray.900");
@@ -11,6 +12,12 @@ const Index = () => {
     const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
     setPosts(storedPosts);
   }, []);
+
+  const handleDelete = (index) => {
+    const updatedPosts = posts.filter((_, i) => i !== index);
+    setPosts(updatedPosts);
+    localStorage.setItem("posts", JSON.stringify(updatedPosts));
+  };
 
   return (
     <Container maxW="container.lg" p={4} bg={bg} color={color}>
@@ -30,9 +37,18 @@ const Index = () => {
       <Box as="main" my={8}>
         <VStack spacing={8} align="stretch">
           {posts.map((post, index) => (
-            <Box key={index} p={5} shadow="md" borderWidth="1px">
+            <Box key={index} p={5} shadow="md" borderWidth="1px" position="relative">
               <Heading fontSize="xl">{post.title}</Heading>
               <Text mt={4}>{post.content}</Text>
+              <Button
+                position="absolute"
+                top="1rem"
+                right="1rem"
+                colorScheme="red"
+                onClick={() => handleDelete(index)}
+              >
+                <FaTrash />
+              </Button>
             </Box>
           ))}
         </VStack>
